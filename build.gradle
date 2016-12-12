@@ -1,0 +1,83 @@
+buildscript {
+    ext {
+        springBootVersion = '1.4.2.RELEASE'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath('se.transmode.gradle:gradle-docker:1.2') 
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'docker' 
+
+group = 'amaresh/projects'
+
+if(hasProperty('cmdGroup')) { 
+    group = cmdGroup 
+}
+
+jar {
+	baseName = 'userservice'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+mainClassName = "com.amaresh.projects.userservice.UserserviceApplication"
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://repo.spring.io/libs-snapshot"
+        url 'http://repo.spring.io/milestone'
+        url 'http://repo.spring.io/libs-release'
+    }
+}
+
+dependencies {
+   	compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: 'spring-boot-starter-tomcat'
+    }   
+    compile("org.springframework.boot:spring-boot-starter-undertow")
+    compile('org.springframework.boot:spring-boot-starter-actuator') 
+    compile("org.springframework.boot:spring-boot-starter-jdbc")
+    testCompile("junit:junit:4.12")
+    testCompile("com.h2database:h2:1.4.191")  
+    compile('org.springframework.boot:spring-boot-starter')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.security.oauth:spring-security-oauth2")
+    compile('org.springframework.security:spring-security-jwt')
+	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
+	compile('org.flywaydb:flyway-core:4.0.3')
+}
+
+task copyJar(type: Copy) {
+    dependsOn   'build'
+    from        "build/libs/userservice.jar"
+    into        'build/docker'
+}
+
+task buildDocker(type: Docker, dependsOn: copyJar) {
+    baseImage "java:8"
+    runCommand("mkdir userservice")
+    addFile("userservice.jar","userservice/")
+    exposePort 8080
+    workingDir("/userservice")
+    runCommand("unzip -q userservice.jar")
+    entryPoint(["java","-Xms128m","-Xmx1024m","-cp", "/userservice-config:.","org.springframework.boot.loader.JarLauncher"])
+    
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.10'
+}

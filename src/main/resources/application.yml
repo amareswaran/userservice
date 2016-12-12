@@ -1,0 +1,96 @@
+spring:
+  application:
+    name: userservice
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://userservicemysql/USERSERVICE?autoreconnect=true
+    password: rootpwd
+    username: root
+    testOnBorrow: true
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: SELECT 1
+    max-active: 15
+    max-idle: 10
+    max-wait: 8000
+  server:
+    port: 8080
+info:
+    app: 
+        name: userservice
+        project: userservice to create a RBAC system
+        version: ${version}
+flyway:
+#    baselineOnMigrate: false
+     validateOnMigrate: true
+     url: jdbc:mysql://userservicemysql/mysql
+     schemas: USERSERVICE
+     user: "root"
+     password: "rootpwd"
+     placeholderReplacement: false
+config:
+    oauth2:
+        clientid: amaresh
+        clientSecret: testtest
+        # openssl genrsa -out jwt.pem 2048
+        # openssl rsa -in jwt.pem
+        privateKey: |
+            -----BEGIN RSA PRIVATE KEY-----
+            MIIEowIBAAKCAQEA39+8c3JVstAuuaIt3OQvf6med9S+XiAC8bWEQRvSUlX9obEX
+            /ZAFosIiSPHLpxybRGEBymHATHeWXDbzJ1IUp6xl3xEu9bRdLthVqYwK5Y/1LOym
+            WYozmKuZXPHGBXos5wTEYoos2L+42vhxRQ7c3utATiLDPIOG9QQ541M3L8l7wW4P
+            tYIKPADX9CLZPkVJ1XQvF0a88YqsevarBNfNcW2bl7KyeS9XEISTln3o5kzR++kL
+            LVNYZD8A81rh+K3Tis9HJ3U3bA42p/7Y3Oxpz3dK2e6v1ewGM8D7DKfkRsy6sM0+
+            SnehXuXJSfUE1F69tSUnfnZ8L+LD+qq3pRF8nQIDAQABAoIBADLJG4QI9N3qkh70
+            ZnkMnqXUQamnbkQF+QUCC22FtTGOZkoO1YVk7ZJdfc+UYoGXYLWjV/ekMy5llot2
+            v7Q0z5C18CopSMDeWKEu3EfpB/PJs3GsgZQgYNIKY3ENO8G0VIlXsIE2HTRSUcoC
+            wBdNZtd/AIh5JFcO80eT3Nnv374MByDA4Ax1/Wr1TgDQLBjgNuAphdNLgKyQIhfA
+            whndZhmaDNbT9mIvjFxls1qj4A6lxRsnhgo9ZoNPQHJRM+kgz+KIlLRVCD8JDcTc
+            gUXh9MNj8GZuMCVNMPzw+SLQhIMuigyb+5HqFd72r7t06KPHwz3oK4gco0BnHTpM
+            rr7RqJUCgYEA/mkltNIqFPWp2jnBrRqGQ/iq67eFOOgtvUtYRShMsahaTFFZmvAF
+            LbzWtvm9YWYy1jFw9zg2JNy+VyUz6SuWBH7G7k1qfuYSJM4g8zYkv0GEFafB2mL+
+            mrQRiTNv1TlwnnZCeA9t61hkaexW26vKNO9LyWX8Pg+bi9QRkqyntHcCgYEA4UXB
+            K1tcnAK0/gBj8j9TgnSEJRsHIlU3sd6wvS/x/qZ6q3gh70qo3oJ/W0oGwUeOX5QL
+            ioRJC8ZbdNz779L8noRWDctKGGHe2hQ8U13RUK5GnzWKPSKpiUk0OMUhRaAekHlS
+            wbiOQIUO1a1mtnuoGFYSPEoIKIPeXCHQEscxgIsCgYAIlzpbucEMBiOfJ9YfZ0bj
+            YrE61m6cNlLdEn8/jpXQZfPuocyZy8MRAVBqy1IWyOGsk+zRnEdPxVh0DuCK3hrp
+            ufIzt8+By3kPXxqDu+9PugGgzZJhMniQdsYk0OTU2WSxJSMndLXsfYaegQmJz2o7
+            kV0IxvXWjqZc+WNChawADwKBgCJiNji66ii51QxL3PV1qvZneF/9fxpDbYvNlKZb
+            shEPMfwICw3uFFZaDrxNUTihBl8aRqSuykNs1DrDHAUf7AT55/SVCcss7QnWOtry
+            n+czon3ceywXpU7aCIl9tTVeWivtCK+ezr+UT45XuCy0NRT51jCzkAk3D3J6irrD
+            ApA/AoGBANkbp9NaH4cA5cKPea9dV/VixTdewcJlkrMjuJ9ztumwxWbIDMzpTmfX
+            oTzQwdzad6lvBjPcRo+EsusNT4CVObO+p72mYbOAtV4iwSvcj/URfe6rQVfhX6Vu
+            MVGGh59x6T0GnpkDRKKmhahCMaKd0JRY4yzBN+2df687BASF7lpr
+            -----END RSA PRIVATE KEY-----
+        # openssl rsa -in jwt.pem -pubout
+        publicKey: |
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA39+8c3JVstAuuaIt3OQv
+          f6med9S+XiAC8bWEQRvSUlX9obEX/ZAFosIiSPHLpxybRGEBymHATHeWXDbzJ1IU
+          p6xl3xEu9bRdLthVqYwK5Y/1LOymWYozmKuZXPHGBXos5wTEYoos2L+42vhxRQ7c
+          3utATiLDPIOG9QQ541M3L8l7wW4PtYIKPADX9CLZPkVJ1XQvF0a88YqsevarBNfN
+          cW2bl7KyeS9XEISTln3o5kzR++kLLVNYZD8A81rh+K3Tis9HJ3U3bA42p/7Y3Oxp
+          z3dK2e6v1ewGM8D7DKfkRsy6sM0+SnehXuXJSfUE1F69tSUnfnZ8L+LD+qq3pRF8
+          nQIDAQAB
+          -----END PUBLIC KEY-----
+# MANAGEMENT HTTP SERVER (ManagementServerProperties)
+management:
+    context-path: /manage
+    security:
+        enabled: false
+#Endpoints configuration
+endpoints:
+    enabled: "true"
+    health:
+        enabled: "true"
+        sensitive: "false"
+    info:
+        enabled: "true"
+        sensitive: "false"
+    metrics:
+        enabled: "true"
+    logfile:
+        enabled: "true"
+    restart:
+        enabled: true
